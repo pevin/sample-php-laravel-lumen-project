@@ -1,0 +1,4 @@
+phpcs:
+    standard: psr2_ruleset.xml
+phpmd:
+    standard: phpmd.xml

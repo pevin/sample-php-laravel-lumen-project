@@ -1,0 +1,48 @@
+machine:
+    php:
+        version: 7.1.9
+    timezone:
+        Asia/Manila
+    environment:
+        APP_ENV: testing
+        DB_CONNECTION: sqlite
+        CACHE_DRIVER: array
+
+dependencies:
+    cache_directories:
+        - ~/.composer/cache
+    post:
+        - 'git clone https://github.com/EdgedesignCZ/phpqa.git ../qa && cd ../qa && composer install --no-dev'
+        - touch database/database.sqlite
+
+test:
+    override:
+        - vendor/bin/phpunit --coverage-clover clover.xml
+        # aim for 100% coverage
+        - php coverage-checker.php clover.xml 100
+        - ../qa/phpqa --report --verbose --buildDir ../var/QA --analyzedDirs app,bootstrap,database,tests --ignoredDirs vendor,storage --tools=phpcs:0,phpmd:0
+        - php artisan swagger-lume:generate
+    post:
+        - cp -r ../var/QA $CIRCLE_ARTIFACTS
+
+experimental:
+  notify:
+    branches:
+      only:
+        - master
+        - dev
+
+deployment:
+  dev:
+    branch: dev
+    codedeploy:
+      views-api:
+        application_root: /
+        revision_location:
+          revision_type: S3
+          s3_location:
+            bucket: codedeploy-us-west-2-views-dev
+            key_pattern: views-api-{SHORT_COMMIT}-{BUILD_NUM}
+        region: us-west-2
+        deployment_group: views-api
+        deployment_config: CodeDeployDefault.AllAtOnce

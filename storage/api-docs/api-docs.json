@@ -1,0 +1,374 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "Salarium Views API",
+        "description": "Views API",
+        "contact": {
+            "email": "eng@salarium.com"
+        },
+        "version": "1.0.0"
+    },
+    "basePath": "/",
+    "schemes": [
+        "http"
+    ],
+    "paths": {
+        "/employee/": {
+            "post": {
+                "tags": [
+                    "employee"
+                ],
+                "summary": "Create Employee View",
+                "description": "Create Employee View",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "data",
+                        "in": "body",
+                        "description": "View Options",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "user_id": {
+                                    "type": "integer"
+                                },
+                                "company_id": {
+                                    "type": "integer"
+                                },
+                                "name": {
+                                    "type": "string"
+                                },
+                                "mode": {
+                                    "type": "string"
+                                },
+                                "columns": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                },
+                                "filters": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "field": {
+                                                "type": "string"
+                                            },
+                                            "condition": {
+                                                "type": "string"
+                                            },
+                                            "value": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Successful Operation"
+                    },
+                    "406": {
+                        "description": "Invalid Request"
+                    }
+                }
+            }
+        },
+        "/employee/{id}": {
+            "get": {
+                "tags": [
+                    "employee"
+                ],
+                "summary": "Get Employee View Settings",
+                "description": "Get Employee View Settings",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Employee View ID",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Operation"
+                    },
+                    "404": {
+                        "description": "View not found"
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "employee"
+                ],
+                "summary": "Update Employee View",
+                "description": "Update Employee View",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Employee View ID",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "data",
+                        "in": "body",
+                        "description": "View Options",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "name": {
+                                    "type": "string"
+                                },
+                                "mode": {
+                                    "type": "string"
+                                },
+                                "columns": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                },
+                                "filters": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "field": {
+                                                "type": "string"
+                                            },
+                                            "condition": {
+                                                "type": "string"
+                                            },
+                                            "value": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Operation"
+                    },
+                    "406": {
+                        "description": "Invalid Request"
+                    }
+                }
+            }
+        },
+        "/employee/{id}/list": {
+            "post": {
+                "tags": [
+                    "employee"
+                ],
+                "summary": "List Employee View Items",
+                "description": "List Employee View Items.\nEnables setting of sorting and pagination options.\nOption to save sorting and pagination options\n",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Employee View ID",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "data",
+                        "in": "body",
+                        "description": "View Options",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "save": {
+                                    "type": "boolean"
+                                },
+                                "sort": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "field": {
+                                                "type": "string"
+                                            },
+                                            "order": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    }
+                                },
+                                "pagination": {
+                                    "type": "object",
+                                    "properties": {
+                                        "page": {
+                                            "type": "integer"
+                                        },
+                                        "per_page": {
+                                            "type": "integer"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Operation"
+                    },
+                    "404": {
+                        "description": "View not found"
+                    }
+                }
+            }
+        },
+        "/employee/user/{id}": {
+            "get": {
+                "tags": [
+                    "employee"
+                ],
+                "summary": "Get User's Employee Views",
+                "description": "Get User's Employee Views",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "User ID",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Operation"
+                    },
+                    "404": {
+                        "description": "View not found"
+                    }
+                }
+            }
+        },
+        "/employee/fields": {
+            "get": {
+                "tags": [
+                    "filter"
+                ],
+                "summary": "Get Employee View Fields",
+                "description": "Get Employee View Fields",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Operation"
+                    }
+                }
+            }
+        },
+        "/employee/columns": {
+            "get": {
+                "tags": [
+                    "filter"
+                ],
+                "summary": "Get Employee View Columns",
+                "description": "Get Employee View Columns",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Operation"
+                    }
+                }
+            }
+        },
+        "/filter/types": {
+            "get": {
+                "tags": [
+                    "filter"
+                ],
+                "summary": "Filter Types",
+                "description": "Filter types and allowed conditions per type",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Operation"
+                    }
+                }
+            }
+        },
+        "/filter/modes": {
+            "get": {
+                "tags": [
+                    "filter"
+                ],
+                "summary": "Filter Modes",
+                "description": "List of allowed filter modes",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Operation"
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {}
+}
